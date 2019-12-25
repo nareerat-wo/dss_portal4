@@ -1,0 +1,8 @@
+{% extends "web/base.html" %}
+{% block content %}
+    {% for post in posts %}
+        <p>Author: {{ post.author }} Date: {{ post.date_posted|date:"F d, Y" }}<p>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.content }}</p>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<header>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-responsive.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'assets/fontawesome-free/css/all.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+    <title>{{ title }} Page</title>
+
+</header>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a href="/">
+                    <img class="scb-logo-text" src="{% static 'assets/img/scb-logo-text.png' %}" height="45">
+                    <img class="scb-logo" src="{% static 'assets/img/scb-logo.png' %}" height="45">
+                </a>
+            </div>
+
+            <ul class="navbar-nav">
+                <li class="{% if title == 'Dashboard' %}active{% endif %}"> 
+                    <a href="{% url 'web-dashboard' %}"><i class="fas fa-tachometer-alt"></i><span>DASHBOARD</span></a>
+                </li>
+                <li class="{% if title == 'Customer' %}active{% endif %}">
+                    <a href="{% url 'web-customer' %}"><i class="fas fa-user"></i><span>CUSTOMER</span></a>
+                </li>
+                <li class="{% if title == 'Inquiry' %}active{% endif %}">
+                    <a href="{% url 'web-inquiry' %}"><i class="fas fa-database"></i><span>INQUIRY</span></a>
+                </li>
+                <li class="{% if title == 'Alert' %}active{% endif %}">
+                    <a href="{% url 'web-alert' %}"><i class="fas fa-bell"></i><span>ALERT</span></a>
+                </li>
+            </ul>
+            <hr>
+            <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </nav>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand bg-white topbar mb-4 static-top shadow">
+                {% if user.is_authenticated %}
+                    <a class="nav_item nav-link" href="{% url 'profile' %}">Profile</a>
+                    <a class="nav_item nav-link" href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a class="nav_item nav-link" href="{% url 'login' %}">Login</a>
+                {% endif %}
+            </nav>
+            <!-- Page Content -->
+            <div id="content">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+
+    <script src="{% static 'assets/js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/scripts.js' %}"></script>
+</body>
+
+</html>
